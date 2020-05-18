@@ -32,8 +32,28 @@
     </div>
   </div>
 
-<script>
-
+  <script>
+    var holes = document.querySelectorAll(".hole");
+    var moles = document.querySelectorAll(".mole");
+    var score = document.querySelector(".score");
+    var countScore = 0;
+    moles.forEach(mole => count(mole))
+    var rnum ;
+    var gameTime;
+    gameTime = Math.random()*((1-0.2));
+    
+    function pop(){
+      setTimeout(function(){
+        rnum = Math.floor(Math.random()*((6-1)+1))+1; 
+        holes[rnum].classList.add("up");
+        console.log(holes[rnum]);
+        //연속태그 중복 방지 코드 추가 할 것
+      },10000)
+    }
+    function count(){
+      countScore= 1++;
+      score.innerHTML = `${countScore}`
+    }
 </script>
 </body>
 </html>
