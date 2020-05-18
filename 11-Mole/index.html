@@ -37,23 +37,46 @@
     var moles = document.querySelectorAll(".mole");
     var score = document.querySelector(".score");
     var countScore = 0;
-    moles.forEach(mole => count(mole))
-    var rnum ;
-    var gameTime;
-    gameTime = Math.random()*((1-0.2));
+    var ranNum;
+    var totalSec = setInterval(function(){
+      totalSec += 1;
+    },1000)
+
+    function startGame(){
+      totalSec = 0;
+      countScore = 0;
+      pop(ranNum);
+    }
     
-    function pop(){
-      setTimeout(function(){
-        rnum = Math.floor(Math.random()*((6-1)+1))+1; 
+    moles.forEach(function (mole){//각 구멍에 click이벤트로 count함수 호출
+      mole.addEventListener("click",count);
+    })
+    
+    
+    function pop(raNum){
+      var gameTime;
+      gameTime = ((Math.random()*0.8)+0.2)*1000;//두더지 사라지는 시간 ms로 세팅
+      rnum = Math.floor(Math.random()*(moles.length)); 
+      if (raNum === rnum){
+        pop();
+      }else{
         holes[rnum].classList.add("up");
-        console.log(holes[rnum]);
-        //연속태그 중복 방지 코드 추가 할 것
-      },10000)
+      }
+      if(totalSec < 11){
+        setTimeout(function(){
+          holes[rnum].classList.remove("up");
+          pop(ranNum);
+        },gameTime);
+      }else{
+        // break;
+      }
+      raNum = rnum;
     }
     function count(){
-      countScore= 1++;
-      score.innerHTML = `${countScore}`
+      countScore += 1; //클릭됐을때 1씩 증가
+      score.innerHTML = `${countScore}`//증가된 점수를 출력
+      this.parentNode.classList.remove("up");
     }
-</script>
+  </script>
 </body>
 </html>
